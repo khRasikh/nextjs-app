@@ -3,9 +3,8 @@ import Footer from "../components/Footer";
 import styles from "../styles/Home.module.css";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
-import users from "./content/users";
 
-export default function Home({ users }) {
+export default function Home({ data }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -20,22 +19,29 @@ export default function Home({ users }) {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
       </main>
-      {/* {users.map((d) => (
-        <h3>{d}</h3>
-      ))} */}
+      <div className="text-justify">
+        {data.map((i) => (
+          <div className="text-justify">
+            <ul>
+              <li>{`${i.id}. ${i.title}`}</li>
+              <li>{i.body}</li>
+            </ul>
+          </div>
+        ))}
+      </div>
       <Footer />
     </div>
   );
 }
 
-// export const getData = async () => {
-//   const res = await fetch(
-//     `https://jsonplaceholder.typicode.com/posts?_limit=6`
-//   ).json();
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/posts?_limit=6`
+  );
+  const data = await res.json();
 
-//   return {
-//     props: {
-//       articles,
-//     },
-//   };
-// };
+  // Pass data to the page via props
+  return { props: { data } };
+}

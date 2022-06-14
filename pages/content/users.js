@@ -1,15 +1,29 @@
-// This function gets called at build time
-export async function getStaticPaths() {
-  // Call an external API endpoint to get posts
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-  const posts = await res.json();
-
-  // Get the paths we want to pre-render based on posts
-  const paths = posts.map((post) => ({
-    params: { id: post.id },
-  }));
-
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  return { paths, fallback: false };
+function Page({ data }) {
+  // Render data...
+  return (
+    <>
+      {data.map((i) => (
+        <div className="text-justify">
+          <div>
+            <h4>{`${i.id}. ${i.title}`}</h4>
+            <p>{i.body}</p>
+          </div>
+        </div>
+      ))}
+    </>
+  );
 }
+
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/posts?_limit=6`
+  );
+  const data = await res.json();
+
+  // Pass data to the page via props
+  return { props: { data } };
+}
+
+export default Page;
