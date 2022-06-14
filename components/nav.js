@@ -9,7 +9,19 @@ const Nav = () => {
           <Link href="/">Home</Link>
         </li>
         <li>
-          <Link href="/about">About</Link>
+          <Link href="/about">Tech Stack</Link>
+        </li>
+        <li>
+          <Link href="/about">Services</Link>
+        </li>
+        <li>
+          <Link href="/about">Recources</Link>
+        </li>
+        <li>
+          <Link href="/about">About Us</Link>
+        </li>
+        <li>
+          <Link href="/about">Careers</Link>
         </li>
       </ul>
     </nav>
