@@ -1,5 +1,6 @@
 import Layout from "../components/layout";
 import "../styles/globals.css";
+import About from "./about";
 
 function MyApp({ Component, pageProps }) {
   return (
