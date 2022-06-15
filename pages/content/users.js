@@ -1,5 +1,10 @@
-function Page({ data }) {
+import Error from "next/error";
+/**fetch data using getStaticProps  */
+export default function Page({ errorCode, data }) {
   // Render data...
+  if (errorCode) {
+    return <Error statusCode={errorCode} />;
+  }
   return (
     <>
       {data.map((i) => (
@@ -20,10 +25,20 @@ export async function getServerSideProps() {
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/posts?_limit=6`
   );
+  const errorCode = res.ok ? false : res.statusCode;
   const data = await res.json();
 
   // Pass data to the page via props
-  return { props: { data } };
+  // return { props: { data } };
+  return {
+    props: { errorCode, data: data },
+  };
 }
 
-export default Page;
+/**fetch data using getServerSideProps  */
+// export async function getUsers({serverSideProps}){
+
+//   return (
+
+//   )
+// }
